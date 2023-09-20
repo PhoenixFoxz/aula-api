@@ -1,0 +1,107 @@
+===================== AULA 6 - API - PT1 ===================
+
++ Criar um novo repositório no github. tec-api (usei a conta oi@kuarto.com.br) associoado a uma pasta no desktop
++ Criar um banco de dados (MYSQL). Iniciar Apache e MYSQL (xampp)
+	- XAMPP e PHP My Admin não são obrigatórios. Sem o xampp íamos instalar o servidor MySQL e faria o gerenciamento pelo Workbench.
+	- Criar novo banco de dados no PHP MyAdmin com nome escolhido e charset uft8_general_ci
+ 	- Na próxima tela criar a tabela alunos e manter colunas em 4, clicar em executar
+	- Hora de expecificar as colunas:
+	1 - Nome: id  Tipo: SMALLINT (ao contrário de TINYINT que permite algumas centenas de registro, SMALLINT permite alguns milharea de registros). Marcar checkbox da coluna AI (autoincremento) e automaticamente o índice será definido como chave primária.
+	2 - Nome: nome | Tipo: VARCHAR | Tamanho/valores: 50
+	3 - Nome: primeira (de primeira nota) | Tipo: Decimal | Tamanho/Valores: 4,2 (4 dígitos no total, sendo duas casas decimais. Permite notas como 09.87)
+	4 - Nome: segunda (segue mesma configuração)
+	5 - Cliquem em guardar e pode fechar essa tela.
+
++ No terminal (conferir se está na pasta correta), executar o npm init
+1. api-alunos
+2. versão:
+3. API usando node e express
+4. Arquivo principal: mudar para app.js
+5. test:
+6. git:
+7. Keywords: (so faz sentido se a ideia é criar um módulo para disponibilizar para outros)
+8. Author:
+9. License: padrão
+10. Revisar
++ inserir o "type" : "module" no package.json
+
++ instalar o express (npm install express)
++ criar index.js (ou app.js dependendo do que configurou no npm init) e importar o express (import express from 'express';) e criar a constante para facilitar o uso dele: const app = express(); e outra para a porta que vamos usar no servidor (não pode ser 80, pq o apache está em uso): const porta = 3000; (qualquer porta que não esteja em uso, sendo que 3000 é a mais utilizada).
+
++ configurar a execução do servidor express
+app.listen(porta, () => {
+    console.log(`Servidor rodando na porta ${porta}`);
+});
+
++ executar via terminal nodemon index.js (não vai aparecer nada porque não configuramos nenhuma rota, para acessar via navegador precisamos pelo menos criar uma rota. É importante configurar as rotas antes mesmo da config. do servidor).
+
++ configurar rota e mensagem inicial para quem acessar o servidor. Afinal o objetivo é uma app e não um site, por isso não inserimos HTML no arquivo ou transformamos ele num ejs como no exemplo anterior.
+
+app.get ('/', function (req, res) {
+    res.send(`API de alunos com NodeJS , Express e MySQL. Com sucesso!`)
+});
+
+
++ Configurando todas as rotas que a API vai suportar, lidando com verbos HTTP (usando o express).
+
+// Endpoint (rota) para todos os alunos da API
+app.get('/alunos', (req, res) => {
+    res.send(`Dados de todos os alunos`);
+})
+
+
+// Endpoint (rota) para dados de UM aluno
+// na sintaxe do express tem que ter " : (dois pontos) " antes de passar o id, é assim que ele entende.
+app.get('/alunos/:id', (req, res) => {
+    res.send(`Dados de um aluno`)
+})
+
+
+- As requisições get podem ser acessadas via navegador, mas post, delete, patch e put não e precisam de programas específicos: Insomnia (https://insomnia.rest/download) e Postman (https://www.postman.com/downloads/?utm_source=postman-home). Esse segundo mais completo que o primeiro, que é muito usado para testes mais simples e rápidos.
+
+DESAFIO RÁPIDO:  deixar que os alunos configurem essas novas rotas. (vide arquivo index.js para respostas e rotas completas).
+// POST: Endpoint para inserir novos alunos
+
+// PUT:  Endpoint para atualizar TODOS os dados de UM aluno
+
+// PATCH:  Endpoint para atualizar todos/alguns dados de UM aluno
+
+// DELETE:  Endpoint para excluir alunos
+
+// ================= RESPOSTA ================
+
+
+// POST: Endpoint para inserir novos alunos
+app.post('/alunos', (req, res) => {
+    res.send('Inserindo UM aluno.');
+})
+
+// PUT:  Endpoint para atualizar TODOS os dados de UM aluno
+app.put('/alunos/:id', (req, res) => {
+    res.send('Atualizar TODOS os dados de UM aluno.');
+})
+
+// PATCH:  Endpoint para atualizar todos/alguns dados de UM aluno
+app.patch('/alunos/:id', (req, res) => {
+    res.send('Atualizar alguns ou todos os dados de UM aluno.');
+})
+
+// DELETE:  Endpoint para excluir alunos
+app.delete('/alunos/:id', (req, res) => {
+    res.send('Excluir UM aluno.');
+})
+
+
+- Para testar as rotas com outros verbos será necessária a instalação dos programas Insomnia e Postman
+
+- Abrir INSOMNIA (ferramentas para desenhar e testar APIs)
+	- Criar uma nova coleção
+	- Criar manualmente as requisições
+		GET: raiz da API - localhost:3000/
+		GET: todos os alunos  - localhost:3000/alunos
+		GET: um aluno - localhost:3000/:id
+		POST: add aluno - localhost:3000/:id
+		PUT: atualiza todos os dados aluno - localhost:3000/:id
+		Patch: Atualiza alguns/todos dados de um aluno - localhost:3000/:id
+		DELETE: exclui um aluno - localhost:3000/:id
+	- Testar rotas e fechar (tudo fica salvo automaticamente)
