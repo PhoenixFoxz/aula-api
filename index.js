@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { ler, inserir, lerUm, atualizar, excluir } from './src/aluno.js';
 const app = express();
 const porta = process.env.PORT || 3306; // permitindo que o servidor aponte a melhor porta ou então, usamos a porta
@@ -8,6 +9,9 @@ app.use(express.json());
 
 // adicionando suporte a dados vindo de formulários 
 app.use(express.urlencoded({extended : true}));
+
+// permitindo acesso aos arquivos da API
+app.use(cors())
 
 // CRIANDO AS ROTAS
 
