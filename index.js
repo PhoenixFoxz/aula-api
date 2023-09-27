@@ -1,7 +1,7 @@
 import express from 'express';
 import { ler, inserir, lerUm, atualizar, excluir } from './src/aluno.js';
 const app = express();
-const porta = process.env.PORT || 3306; // permitindo que o servidor aponte a melhor porta ou então, usamos a porta 3306
+const porta = process.env.PORT || 3306; // permitindo que o servidor aponte a melhor porta ou então, usamos a porta
 
 // adicionando suporte ao formato json
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended : true}));
 
 // Raiz da aplicação
 app.get('/', (req, res) => {
-    res.send(`Raiz da API NodeJS + Express + MySQL`);
+    res.redirect(`https://documenter.getpostman.com/view/29885750/2s9YJZ34cj`);
 });
 
 // EXIBINDO TODOS OS ALUNOS
